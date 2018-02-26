@@ -34,6 +34,10 @@
       height: 100%;
       vertical-align: top;
       text-align: center;
+
+      &-conteudo {
+          overflow: hidden;
+      }
   }
 
   .painel .painel-titulo {
@@ -53,7 +57,7 @@
         opacity: 0;
     }
 
-  * {
-      box-shadow: 5px 5px 5px;
-  }
+    * {
+        box-shadow: 5px 5px 5px;
+    }
 </style>
