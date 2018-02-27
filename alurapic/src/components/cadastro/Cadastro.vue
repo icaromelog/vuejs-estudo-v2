@@ -36,7 +36,12 @@
 
 import ImagemResponsiva from '../shared/imagem-responsiva/ImagemResponsiva.vue'
 import Botao from '../shared/botao/Botao.vue';
+
+// Importando classe Foto.
 import Foto from '../../domain/foto/Foto'
+
+// Importando classe FotoService.
+import FotoService from '../../domain/foto/FotoService';
 
 export default {
 
@@ -56,10 +61,11 @@ export default {
   methods: {
 
     gravaForm() {
-      this.resource
-        .save('v1/fotos', this.foto)
+      
+      this.service
+        .cadastra(this.foto)
         .then(() => this.foto = new Foto(), err => console.log(err));
-        
+
         // ** Adição utilizando http.
         // this.$http
         //   .post('v1/fotos', this.foto)
@@ -68,8 +74,8 @@ export default {
   },
 
   created() {
-    this.resource = this.$resource('v1/fotos')
 
+    this.service = new FotoService(this.$resource); 
   }
 }
 

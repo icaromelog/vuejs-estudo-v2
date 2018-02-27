@@ -30,6 +30,9 @@
   // Importou  diretiva. Tem que adicionar na propriedade directives logo abaixo!
   import transform from '../../directives/Transform';
 
+  // Importando classe FotoService.
+  import FotoService from '../../domain/foto/FotoService';
+
   export default {
 
     components: {
@@ -52,11 +55,11 @@
     },
 
     created() {
-      this.resource = this.$resource('v1/fotos{/id}');
-      this.resource
-        .query()
-          .then(res => res.json())
-          .then(fotos => this.fotoslist = fotos, err => console.log(err));
+      this.service = new FotoService(this.$resource);
+
+      this.service
+          .lista()
+          .then(fotos => this.fotoslist = fotos, err => console.log(err));    
 
       // ** Requisição utilizando http.
       // this.$http.get('v1/fotos')
@@ -67,8 +70,8 @@
     methods: {
       remove(foto) {
 
-        this.resource
-          .delete({ id: foto._id})
+        this.service
+          .apaga(foto._id)
           .then(() => {
               let indice = this.fotoslist.indexOf(foto);
               this.fotoslist.splice(indice, 1);
