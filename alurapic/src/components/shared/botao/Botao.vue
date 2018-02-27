@@ -22,7 +22,7 @@
         methods: {
             disparaAcao() {
                 if (this.confirmacao) {
-                    if (confirm('Conirma operação?')) {
+                    if (confirm('Confirma operação?')) {
                         this.$emit('botaoAtivado');                    
                     }
                     return;
