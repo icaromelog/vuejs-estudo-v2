@@ -56,10 +56,20 @@ export default {
   methods: {
 
     gravaForm() {
-      this.$http
-        .post('http://localhost:3000/v1/fotos', this.foto)
+      this.resource
+        .save('v1/fotos', this.foto)
         .then(() => this.foto = new Foto(), err => console.log(err));
+        
+        // ** Adição utilizando http.
+        // this.$http
+        //   .post('v1/fotos', this.foto)
+        //   .then(() => this.foto = new Foto(), err => console.log(err));
     }
+  },
+
+  created() {
+    this.resource = this.$resource('v1/fotos')
+
   }
 }
 

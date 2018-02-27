@@ -52,16 +52,23 @@
     },
 
     created() {
-      this.$http.get('http://localhost:3000/v1/fotos')
-        .then(res => res.json())
-        .then(fotos => this.fotoslist = fotos, err => console.log(err));
+      this.resource = this.$resource('v1/fotos{/id}');
+      this.resource
+        .query()
+          .then(res => res.json())
+          .then(fotos => this.fotoslist = fotos, err => console.log(err));
+
+      // ** Requisição utilizando http.
+      // this.$http.get('v1/fotos')
+      //   .then(res => res.json())
+      //   .then(fotos => this.fotoslist = fotos, err => console.log(err));
     },
 
     methods: {
       remove(foto) {
-         
-         this.$http
-          .delete(`http://localhost:3000/v1/fotos/${foto._id}`)
+
+        this.resource
+          .delete({ id: foto._id})
           .then(() => {
               let indice = this.fotoslist.indexOf(foto);
               this.fotoslist.splice(indice, 1);
@@ -72,6 +79,20 @@
               console.log(err);
             } 
           )
+
+        // ** Remoção utilizando http.
+        //  this.$http
+        //   .delete(`v1/fotos/${foto._id}`)
+        //   .then(() => {
+        //       let indice = this.fotoslist.indexOf(foto);
+        //       this.fotoslist.splice(indice, 1);
+        //       this.mensagem = 'Foto removida com sucesso';
+        //     },
+        //     err => {
+        //       this.mensagem = "Não foi possível remover a foto";
+        //       console.log(err);
+        //     } 
+        //   )
           
       }
     },
