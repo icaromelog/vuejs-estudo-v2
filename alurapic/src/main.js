@@ -8,8 +8,11 @@ import { routes } from './routes.js'
 
 import './directives/Transform'
 
-
 Vue.use(VueResource);
+
+// ** Definindo um caminho root para API
+Vue.http.options.root = 'http://localhost:3000';
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({ 
