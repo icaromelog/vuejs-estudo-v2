@@ -63,7 +63,7 @@
 
       this.service
           .lista()
-          .then(fotos => this.fotoslist = fotos, err => console.log(err));    
+          .then(fotos => this.fotoslist = fotos, err => this.mensagem = err.message) 
 
       // ** Requisição utilizando http.
       // this.$http.get('v1/fotos')
@@ -73,19 +73,14 @@
 
     methods: {
       remove(foto) {
-
+        
         this.service
           .apaga(foto._id)
           .then(() => {
               let indice = this.fotoslist.indexOf(foto);
               this.fotoslist.splice(indice, 1);
               this.mensagem = 'Foto removida com sucesso';
-            },
-            err => {
-              this.mensagem = "Não foi possível remover a foto";
-              console.log(err);
-            } 
-          )
+            }, err => this.mensagem = err.message)
 
         // ** Remoção utilizando http.
         //  this.$http
