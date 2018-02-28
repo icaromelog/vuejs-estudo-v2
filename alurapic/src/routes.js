@@ -1,5 +1,8 @@
 import Home from './components/home/Home.vue';
-import Cadastro from './components/cadastro/Cadastro.vue';
+
+// ** Praticando lazy loading e carregamento async
+const Cadastro = () => System.import('./components/cadastro/Cadastro.vue').then(m => m.default);
+// import Cadastro from './components/cadastro/Cadastro.vue';
 
 export const routes = [
     { path: '', name: 'home', component: Home, titulo: 'Home', menu: true},
