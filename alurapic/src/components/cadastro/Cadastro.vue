@@ -9,12 +9,14 @@
     <form @submit.prevent='gravaForm()'>
       <div class="controle">
         <label for="titulo">TÍTULO</label>
-        <input id="titulo" v-model.lazy="foto.titulo" autocomplete="off">
+        <input data-vv-as="título" v-validate="'required|min:3|max:30'" name="titulo" id="titulo" v-model="foto.titulo" autocomplete="off">
+        <span class="erro" v-show="errors.has('titulo')">{{ errors.first('titulo') }}</span>
       </div>
 
       <div class="controle">
         <label for="url">URL</label>
-        <input id="url" v-model.lazy="foto.url" autocomplete="off">
+        <input v-validate="'required|url'" name="url" id="url" v-model="foto.url" autocomplete="off">
+          <span class="erro" v-show="errors.has('url')">{{ errors.first('url') }}</span>
         <transition name="fade">
           <imagem-responsiva v-if="foto.titulo && foto.url" :url="foto.url" :titulo="foto.titulo" />
         </transition>
@@ -67,17 +69,23 @@ export default {
 
     gravaForm() {
       
-      this.service
-        .cadastra(this.foto)
-        .then(() => {
-              if (this.id) this.$router.push({ name: 'home' }); 
-              this.foto = new Foto()
-            }, err => console.log(err));
+      this.$validator
+      .validateAll()
+        .then(sucess => {
+          if(sucess) {
+            this.service
+              .cadastra(this.foto)
+              .then(() => {
+                    if (this.id) this.$router.push({ name: 'home' }); 
+                    this.foto = new Foto()
+                  }, err => console.log(err));
 
-        // ** Adição utilizando http.
-        // this.$http
-        //   .post('v1/fotos', this.foto)
-        //   .then(() => this.foto = new Foto(), err => console.log(err));
+              // ** Adição utilizando http.
+              // this.$http
+              //   .post('v1/fotos', this.foto)
+              //   .then(() => this.foto = new Foto(), err => console.log(err));
+          }
+        })
     }
   },
 
@@ -124,5 +132,8 @@ export default {
   }
   .fade-enter, .fade-leave-to {
     opacity: 0;
+  }
+  .erro {
+    color: red;
   }
 </style>
