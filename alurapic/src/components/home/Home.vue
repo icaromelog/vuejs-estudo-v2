@@ -1,12 +1,13 @@
 <template>
   <div>
+    <img src="../../assets/logo.png" alt="">
     <h1 class="centralizado">{{ titulo }}</h1>
     <p v-show="mensagem" class="centralizado">{{ mensagem }}</p>
     <input type="search" class="filtro" @input="filtro = $event.target.value" placeholder="Filtre por parte do titulo" />
     {{ filtro }}
 
     <ul class="lista-fotos">
-      <li class="lista-fotos-item" v-for="foto of fotosComfiltro" v-bind:key='foto'>  
+      <li class="lista-fotos-item" v-for="foto of fotosComfiltro" :key='foto'>  
           <meu-painel :titulo="foto.titulo">
               <imagem-responsiva v-meu-transform:scale.animate="1.1" :url="foto.url" :titulo="foto.titulo"></imagem-responsiva>
               
@@ -73,7 +74,7 @@
 
     methods: {
       remove(foto) {
-        
+
         this.service
           .apaga(foto._id)
           .then(() => {
